@@ -72,8 +72,9 @@ struct coord count_goals_nearby(struct input_info* info){
     struct coord point;
     point.x = info->goals[0].x;
     point.y = info->goals[0].y;
-    point.neibour_count = info->goals[0].neibour_count;
+    point.neibour_count = info->goals[0].neibour_count=0;
     for(int i = 0; i<info->goals_count; i ++){
+        info->goals[i].neibour_count=0;
         for(int j=0; j<info->goals_count; j++){
             if(is_in_area(info->goals[i].x, info->goals[i].y, info->goals[j].x, info->goals[j].y, info->radius)){
                 info->goals[i].neibour_count++;
@@ -108,6 +109,8 @@ int main(int argc, char * argv[]) {
     struct coord final_point = count_goals_nearby(&info);
 
     printf("Выбранные координаты: %d %d\nБудет поражено целей: %d \n", final_point.x, final_point.y, final_point.neibour_count);
+
+    free(info.goals);
 
     return 0;
 }
